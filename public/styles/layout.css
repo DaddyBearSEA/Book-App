@@ -1,0 +1,8 @@
+body {
+  background: linear-gradient(to right, green, purple)
+}
+
+h2 {
+  font-size: 48px;
+  color: white;
+}
