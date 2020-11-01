@@ -18,7 +18,7 @@ const app = express();
 app.use(cors());
 
 // Server looks for pages to serve browser
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
 // Set default view engine
 app.set('view engine', 'ejs');
@@ -34,7 +34,10 @@ console.log('I\'ll wear your face as a mask');
 response.status(200).render('pages/hello');
 });
 
-
+app.get('/new', (request, response) => {
+  console.log('Brains are better saute´d than boiled');
+  response.status(200).render('pages/searches/new');
+  });
 
 
 
