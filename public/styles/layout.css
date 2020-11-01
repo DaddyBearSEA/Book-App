@@ -1,8 +1,33 @@
 body {
-  background: linear-gradient(to right, green, purple)
+  background: linear-gradient(to right, green, purple);
+  /* display: flex;
+  flex-direction: column; */
 }
 
 h2 {
   font-size: 48px;
   color: white;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+legend {
+  color: yellow;
+  background: linear-gradient(to right, black, grey, lightgrey);
+  justify-content: flex-end;
+}
+
+label {
+  color: red;
+  font-weight: bold;
+  justify-content: flex-end;
+}
+
+input {
+  background-color: #8A0303;
+  justify-content: flex-end;
 }
