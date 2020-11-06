@@ -10,14 +10,15 @@
   <title>Boooooook App - Search</title>
 </head>
 <body>
-  <form action="" method="GET">
+  <form action="/new" method="POST">
   <fieldset>
     <legend>Search Spooky Titles</legend>
     <label><span><input type="text" name="ghost" placeholder="Spooooky title here"></span></label>
-    <label><span>Title<input type="radio" name="title"></span></label>
-    <label><span>Author<input type="radio" name="author"></span></label>
-    <input type="submit" value="Search Gooooooogle......IF YOU DARE!!!!"></input>
+    <label><span>Title<input type="radio" name="ghost" value="title" required></span></label>
+    <label><span>Author<input type="radio" name="ghost" value="author" required></span></label>
+    
   </fieldset>
+  <button type="submit" value="Search Gooooooogle......IF YOU DARE!!!!"></button>
   </form>
 </body>
 </html>
