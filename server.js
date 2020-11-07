@@ -18,28 +18,28 @@ const app = express();
 app.use(cors());
 
 // ----------  Server looks for pages to serve browser -- Application Middleware
-
-// app.use(express.urlencoded({ extended: true }));  When you use for DATABASE.
+// app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // When you use for DATABASE.
 app.use(express.static('public'));
 
 // -------------------Set default view engine
 app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
-app.get('/searches/new', (request, response) => {
+app.get('/new', (request, response) => { // displays search page
   console.log('I\'ll wear your face as a mask');
   response.render('pages/searches/new');
 });
-app.post('/new', spookyBookSeaTitleHandler); // searchs for the book info
+app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book info
 
 
-// proof of life
-app.get('/', (request, response) => {
-  console.log('No Booooooooleans here!');
-  response.status(200).render('pages/index');
-});
+// // proof of life
+// app.get('/', (request, response) => {
+//   console.log('No Booooooooleans here!');
+//   response.status(200).render('pages/index');
+// });
 
-// app.get('/hello', (request, response) => {
+// app.post('/hello', (request, response) => {
 //   console.log('I\'ll wear your face as a mask');
 //   response.status(200).render('pages/hello');
 // });
@@ -47,7 +47,7 @@ app.get('/', (request, response) => {
 
 /* TODO:
 1. constructor to function to model your data
-  a. Search for Title:  https://www.googleapis.com/books/v1/volumes?q=${title}
+  a. Search for Title:  https://www.googleapis.com/books/v1/volumes?q=${title}  
   b. search for Authors: https://www.googleapis.com/books/v1/volumes?q=${author} 
   c. Max Results: https://www.googleapis.com/books/v1/volumes?q=${title}&max-results=10
   STRETCH GOAL - Add number of results
@@ -90,7 +90,7 @@ function Spookybooks(obj) {
 
 function spookyBookSeaTitleHandler(request, response) {
   console.log('sppppooookkkkeeeeyyyy');
-  console.log('Our request : ', request.query);
+  console.log('Our request : ', request.body);
   const blood = `https://www.googleapis.com/books/v1/volumes?q=`;
   // console.log('URL: ', blood);
   // console.log('query ghost ', request.query.ghost);

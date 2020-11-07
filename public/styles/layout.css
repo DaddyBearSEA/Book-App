@@ -30,4 +30,14 @@ label {
 input {
   background-color: #8A0303;
   justify-content: flex-end;
+  color: aquamarine;
+}
+
+#spookybutton {
+   background-color: rgb(255, 0, 170);
+   font-size: medium;
+   color: blue;
+   height: 50px;
+   width: 130px;
+
 }
