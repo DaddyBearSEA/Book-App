@@ -20,21 +20,29 @@ app.use(cors());
 // ----------  Server looks for pages to serve browser -- Application Middleware
 
 // app.use(express.urlencoded({ extended: true }));  When you use for DATABASE.
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
 // -------------------Set default view engine
 app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
+app.get('/searches/new', (request, response) => {
+  console.log('I\'ll wear your face as a mask');
+  response.render('pages/searches/new');
+});
+app.post('/new', spookyBookSeaTitleHandler); // searchs for the book info
+
+
+// proof of life
 app.get('/', (request, response) => {
-  console.log('No Booooooooleans here!')
+  console.log('No Booooooooleans here!');
   response.status(200).render('pages/index');
 });
 
-app.get('/hello', (request, response) => {
-  console.log('I\'ll wear your face as a mask');
-  response.status(200).render('pages/hello');
-});
+// app.get('/hello', (request, response) => {
+//   console.log('I\'ll wear your face as a mask');
+//   response.status(200).render('pages/hello');
+// });
 
 
 /* TODO:
@@ -54,7 +62,7 @@ app.get('/hello', (request, response) => {
   c. searches/show 
 */
 
-app.get('/new', spookyBookSeaTitleHandler);  // searchs for the book info
+
 // app.get('/search', spookyBookSeaAuthHandler);
 
 
@@ -82,22 +90,23 @@ function Spookybooks(obj) {
 
 function spookyBookSeaTitleHandler(request, response) {
   console.log('sppppooookkkkeeeeyyyy');
-  let ourGhost = request.query.ghost;
   console.log('Our request : ', request.query);
-  const URL = `https://www.googleapis.com/books/v1/volumes?q=${ourGhost}`;
-  console.log('URL: ', URL);
+  const blood = `https://www.googleapis.com/books/v1/volumes?q=`;
+  // console.log('URL: ', blood);
+  // console.log('query ghost ', request.query.ghost);
+  console.log('body ', request.body);
+  
+  // if (request.query.ghost[1] === 'title') { blood += `+intitle:${request.query.ghost[0]}`; }
+  // if (request.query[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
+  console.log('Line 97 new URL: ', blood);
+  
+  // superagent.get(blood)
+  //   .then(pumpkin => pumpkin.body.items.map(zombie => new Spookybooks(zombie.volumeInfo)))
 
-  superagent.get(URL)
-    .then(pumpkin => {
-      console.log(pumpkin);
-      const spookyBookArr = pumpkin.body.items.map(zombie => {
-        return new Spookybooks(zombie);
-
-      });
-      response.status(200).render('pages/searches/new', spookyBookArr);
-
-    });
+  //   .then(witch => response.render('pages/searches/show', { searchResults: witch }));
+  response.status(200).render('pages/searches/new');
 }
+
 
 
 
