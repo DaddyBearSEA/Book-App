@@ -79,10 +79,10 @@ app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book 
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.authors = obj.authors ? obj.authors: 'This was ghost written, no author found';
-  this.title = obj.title ? obj.title: 'Who says a book needs a title? No title found.';
-  this.description = obj.description ? obj.description: 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
-  this.image_url = obj.imageLinks.thumbnail ? obj.imageLinks.thumbnail: "https://i.imgur.com/J5LVHEL.jpg";
+  this.authors = (obj.authors) ? obj.authors: 'This was ghost written, no author found';
+  this.title = (obj.title) ? obj.title: 'Who says a book needs a title? No title found.';
+  this.description = (obj.description) ? obj.description: 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
+  this.image_url = (obj.imageLinks.thumbnail) ? obj.imageLinks.thumbnail: "https://i.imgur.com/J5LVHEL.jpg";
   // console.log('Constructor HIT!', this.authors);
 }
 
@@ -111,12 +111,16 @@ function spookyBookSeaTitleHandler(request, response) {
   // console.log('IS THIS THE AUTHOR???', request.body.ghost[0]);
     
   superagent.get(blood)
-    .then(pumpkin => pumpkin.body.items.map(zombie => {
-      new Spookybooks(zombie.volumeInfo);
+    .then(pumpkin => {
+      let witch = pumpkin.body.items.map(zombie => {
+      return new Spookybooks(zombie.volumeInfo);
+    })
+    response.status(200).render('pages/searches/show', { searchResults: witch });
       // console.log('ZOMBIE.VOLUMEINFO', zombie.volumeInfo);
-    }))
-    .then(witch => response.render('pages/searches/show', { searchResults: witch }));
-    
+  })
+    // .then(witch => {
+    //   console.log('WITCH', witch);
+    //   response.render('pages/searches/show', { searchResults: witch })});
     
     
     // .catch(error => console.error(error));

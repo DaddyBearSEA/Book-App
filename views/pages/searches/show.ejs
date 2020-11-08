@@ -6,17 +6,12 @@
   <title>Search Results</title>
 </head>
 <body>
-  <h2>Your Ghostly Results are Bloody!</h2>
-  <!-- <li>Data Here</li> -->
-  <% searchResults.forEach( book => { %>
-    <section>
-    <p><%= book.title %></p>
-  </section>
-    <% }) %>
-    <!-- failed attempts: potato, -->
-    <!--Image-->
-    <!--ISBN-->
-    <!--title-->
-    <!--Descripition-->
+ <section>
+   <% searchResults.forEach(book => { %>
+    <% console.log(book); %>
+    <h1><%=book.title%></h1>
+    <h3><%=book.author%></h3>
+  <% }) %>
+ </section>
 </body>
 </html>
