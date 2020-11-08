@@ -78,10 +78,10 @@ app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book 
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.author = obj.volumeInfo.authors;
-  this.title = obj.volumeInfo.title;
-  this.description = obj.volumeInfo.description;
-  // this.image_url = obj.volumeInfo.imageLinks.thumbnail;
+  this.author = obj.authors;
+  this.title = obj.title;
+  this.description = obj.description;
+  this.image_url = obj.imageLinks.thumbnail;
   console.log('Constructor HIT!');
 }
 
@@ -90,21 +90,30 @@ function Spookybooks(obj) {
 
 function spookyBookSeaTitleHandler(request, response) {
   console.log('sppppooookkkkeeeeyyyy');
-  console.log('Our request : ', request.body);
-  const blood = `https://www.googleapis.com/books/v1/volumes?q=`;
-  // console.log('URL: ', blood);
-  // console.log('query ghost ', request.query.ghost);
-  console.log('body ', request.body);
-  
-  // if (request.query.ghost[1] === 'title') { blood += `+intitle:${request.query.ghost[0]}`; }
-  // if (request.query[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
-  console.log('Line 97 new URL: ', blood);
-  
-  // superagent.get(blood)
-  //   .then(pumpkin => pumpkin.body.items.map(zombie => new Spookybooks(zombie.volumeInfo)))
+  console.log('Our request : ', request.body.ghost[0]);
+  let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
 
-  //   .then(witch => response.render('pages/searches/show', { searchResults: witch }));
-  response.status(200).render('pages/searches/new');
+
+  /* ------------------  what in the hell is wrong with these if line?  ----*/
+  // s/b  https://www.googleapis.com/books/v1/volumes?q=+intitle:IT  - Title
+  // if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+
+  if (request.body.ghost[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
+  if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+
+  console.log('new URL: ', blood);
+
+
+  superagent.get(blood)
+    .then(pumpkin => pumpkin.body.items.map(zombie => {
+      new Spookybooks(zombie.volumeInfo);
+    }))
+
+    .then(witch => response.render('pages/searches/show', { searchResults: witch }));
+  console.log('superagent Squirrel');
+
+  // response.status(200).render('pages/searches/new');
+
 }
 
 
