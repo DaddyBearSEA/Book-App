@@ -18,28 +18,28 @@ const app = express();
 app.use(cors());
 
 // ----------  Server looks for pages to serve browser -- Application Middleware
-
-// app.use(express.urlencoded({ extended: true }));  When you use for DATABASE.
+// app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // When you use for DATABASE.
 app.use(express.static('public'));
 
 // -------------------Set default view engine
 app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
-app.get('/searches/new', (request, response) => {
+app.get('/new', (request, response) => { // displays search page
   console.log('I\'ll wear your face as a mask');
   response.render('pages/searches/new');
 });
-app.post('/new', spookyBookSeaTitleHandler); // searchs for the book info
+app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book info
 
 
-// proof of life
-app.get('/', (request, response) => {
-  console.log('No Booooooooleans here!');
-  response.status(200).render('pages/index');
-});
+// // proof of life
+// app.get('/', (request, response) => {
+//   console.log('No Booooooooleans here!');
+//   response.status(200).render('pages/index');
+// });
 
-// app.get('/hello', (request, response) => {
+// app.post('/hello', (request, response) => {
 //   console.log('I\'ll wear your face as a mask');
 //   response.status(200).render('pages/hello');
 // });
@@ -47,7 +47,7 @@ app.get('/', (request, response) => {
 
 /* TODO:
 1. constructor to function to model your data
-  a. Search for Title:  https://www.googleapis.com/books/v1/volumes?q=${title}
+  a. Search for Title:  https://www.googleapis.com/books/v1/volumes?q=${title}  
   b. search for Authors: https://www.googleapis.com/books/v1/volumes?q=${author} 
   c. Max Results: https://www.googleapis.com/books/v1/volumes?q=${title}&max-results=10
   STRETCH GOAL - Add number of results
@@ -78,10 +78,10 @@ app.get('/', (request, response) => {
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.author = obj.volumeInfo.authors;
-  this.title = obj.volumeInfo.title;
-  this.description = obj.volumeInfo.description;
-  // this.image_url = obj.volumeInfo.imageLinks.thumbnail;
+  this.author = obj.authors;
+  this.title = obj.title;
+  this.description = obj.description;
+  this.image_url = obj.imageLinks.thumbnail;
   console.log('Constructor HIT!');
 }
 
@@ -90,21 +90,30 @@ function Spookybooks(obj) {
 
 function spookyBookSeaTitleHandler(request, response) {
   console.log('sppppooookkkkeeeeyyyy');
-  console.log('Our request : ', request.query);
-  const blood = `https://www.googleapis.com/books/v1/volumes?q=`;
-  // console.log('URL: ', blood);
-  // console.log('query ghost ', request.query.ghost);
-  console.log('body ', request.body);
-  
-  // if (request.query.ghost[1] === 'title') { blood += `+intitle:${request.query.ghost[0]}`; }
-  // if (request.query[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
-  console.log('Line 97 new URL: ', blood);
-  
-  // superagent.get(blood)
-  //   .then(pumpkin => pumpkin.body.items.map(zombie => new Spookybooks(zombie.volumeInfo)))
+  console.log('Our request : ', request.body.ghost[0]);
+  let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
 
-  //   .then(witch => response.render('pages/searches/show', { searchResults: witch }));
-  response.status(200).render('pages/searches/new');
+
+  /* ------------------  what in the hell is wrong with these if line?  ----*/
+  // s/b  https://www.googleapis.com/books/v1/volumes?q=+intitle:IT  - Title
+  // if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+
+  if (request.body.ghost[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
+  if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+
+  console.log('new URL: ', blood);
+
+
+  superagent.get(blood)
+    .then(pumpkin => pumpkin.body.items.map(zombie => {
+      new Spookybooks(zombie.volumeInfo);
+    }))
+
+    .then(witch => response.render('pages/searches/show', { searchResults: witch }));
+  console.log('superagent Squirrel');
+
+  // response.status(200).render('pages/searches/new');
+
 }
 
 
