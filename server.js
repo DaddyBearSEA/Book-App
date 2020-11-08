@@ -19,8 +19,9 @@ app.use(cors());
 
 // ----------  Server looks for pages to serve browser -- Application Middleware
 // app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // When you use for DATABASE.
 app.use(express.static('public'));
+
+app.use(express.urlencoded({ extended: true })); 
 
 // -------------------Set default view engine
 app.set('view engine', 'ejs');
@@ -78,19 +79,24 @@ app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book 
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.author = obj.authors;
-  this.title = obj.title;
-  this.description = obj.description;
-  this.image_url = obj.imageLinks.thumbnail;
-  console.log('Constructor HIT!');
+  this.authors = obj.authors ? obj.authors: 'This was ghost written, no author found';
+  this.title = obj.title ? obj.title: 'Who says a book needs a title? No title found.';
+  this.description = obj.description ? obj.description: 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
+  this.image_url = obj.imageLinks.thumbnail ? obj.imageLinks.thumbnail: "https://i.imgur.com/J5LVHEL.jpg";
+  // console.log('Constructor HIT!', this.authors);
 }
+
+// ^^^^^^^^^^JavaScript Array toString() Method for AUTHOR^^^^^^^^^^
+// https://www.w3schools.com/jsref/jsref_tostring_array.asp#:~:text=The%20toString()%20method%20returns,not%20change%20the%20original%20array.
+
+
 
 
 /* --------------------  Handlers  ------------------*/
 
 function spookyBookSeaTitleHandler(request, response) {
-  console.log('sppppooookkkkeeeeyyyy');
-  console.log('Our request : ', request.body.ghost[0]);
+  // console.log('sppppooookkkkeeeeyyyy');
+  // console.log('Our request : ', request.body.ghost[0]);
   let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
 
 
@@ -102,19 +108,23 @@ function spookyBookSeaTitleHandler(request, response) {
   if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
 
   console.log('new URL: ', blood);
-
-
+  // console.log('IS THIS THE AUTHOR???', request.body.ghost[0]);
+    
   superagent.get(blood)
     .then(pumpkin => pumpkin.body.items.map(zombie => {
       new Spookybooks(zombie.volumeInfo);
+      // console.log('ZOMBIE.VOLUMEINFO', zombie.volumeInfo);
     }))
-
     .then(witch => response.render('pages/searches/show', { searchResults: witch }));
-  console.log('superagent Squirrel');
+    
+    
+    
+    // .catch(error => console.error(error));
+    
+  }
+
 
   // response.status(200).render('pages/searches/new');
-
-}
 
 
 
