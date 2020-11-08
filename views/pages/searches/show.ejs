@@ -8,9 +8,11 @@
 <body>
  <section>
    <% searchResults.forEach(book => { %>
-    <% console.log(book); %>
+    <% console.log('BOOK', book); %>
+    <img scr= "<%= book.image_url %>">
     <h1><%=book.title%></h1>
-    <h3><%=book.author%></h3>
+    <h3><%=book.authors%></h3>
+    <p><%=book.description%></p>
   <% }) %>
  </section>
 </body>
