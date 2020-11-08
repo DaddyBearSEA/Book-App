@@ -8,7 +8,11 @@
 <body>
   <h2>Your Ghostly Results are Bloody!</h2>
   <ul>
-    <!--Strawberries for display of DATA  Using ForEach -->
+    <% searchResults.forEach( zombie => { %>
+      <li><%= zombie.title %></li>
+      
+
+    <% }) %>
     <li>Data Here</li>
     <!--Image-->
     <!--ISBN-->
