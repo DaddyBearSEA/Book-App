@@ -7,17 +7,16 @@
 </head>
 <body>
   <h2>Your Ghostly Results are Bloody!</h2>
-  <ul>
-    <% searchResults.forEach( zombie => { %>
-      <li><%= zombie.title %></li>
-      
-
+  <!-- <li>Data Here</li> -->
+  <% searchResults.forEach( book => { %>
+    <section>
+    <p><%= book.title %></p>
+  </section>
     <% }) %>
-    <li>Data Here</li>
+    <!-- failed attempts: potato, -->
     <!--Image-->
     <!--ISBN-->
     <!--title-->
     <!--Descripition-->
-  </ul>
 </body>
 </html>
