@@ -27,6 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
+app.get('/', (request, response) => {
+  response.render('pages/index');
+});
+
 app.get('/new', (request, response) => { // displays search page
   console.log('I\'ll wear your face as a mask');
   response.render('pages/searches/new');
