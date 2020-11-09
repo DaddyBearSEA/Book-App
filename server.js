@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 3000;
 
 // Database connection
 const client = new pg.Client(process.env.DATABASE_URL);
+client.connect()
 client.on('error', err => console.error(err));
+console.log('DATABASE IS LIVE!!!')
 
 // Start Express Application
 const app = express();
@@ -106,16 +108,16 @@ function spookyBookSeaTitleHandler(request, response) {
 
 
 
-client.connect()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Now listening on ${PORT}!`)
-      console.log('Database is active');
-    });
-  })
-  .catch(error => console.error(error));
+// client.connect()
+//   .then(() => {
+//     app.listen(PORT, () => {
+//       console.log(`Now listening on ${PORT}!`)
+//       console.log('Database is active');
+//     });
+//   })
+//   .catch(error => console.error(error));
 
 
 /* ------------------   Start Server -----------------*/
-// app.listen(PORT, () => console.log(`Now listening on ${PORT}!`));
+app.listen(PORT, () => console.log(`Now listening on ${PORT}!`));
 
