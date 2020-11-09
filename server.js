@@ -5,11 +5,16 @@
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
+const pg = require('pg');
 
 require('dotenv').config();
 
 // Create Port
 const PORT = process.env.PORT || 3000;
+
+// Database connection
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.error(err));
 
 // Start Express Application
 const app = express();
@@ -49,25 +54,6 @@ app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book 
 //   response.status(200).render('pages/hello');
 // });
 
-
-/* TODO:
-1. constructor to function to model your data
-  a. Search for Title:  https://www.googleapis.com/books/v1/volumes?q=${title}  
-  b. search for Authors: https://www.googleapis.com/books/v1/volumes?q=${author} 
-  c. Max Results: https://www.googleapis.com/books/v1/volumes?q=${title}&max-results=10
-  STRETCH GOAL - Add number of results
-
-2. Populate show.ejs with response from API call
-
-3. Validate Data and use IMG for no book covers - SUPERAGENT
-
-4. Post Request for / searches - post request to show 10 results.
-  a. map method used to display results
-  b. new instance for each book instance
-  c. searches/show 
-*/
-
-
 // app.get('/search', spookyBookSeaAuthHandler);
 
 
@@ -99,43 +85,37 @@ function Spookybooks(obj) {
 /* --------------------  Handlers  ------------------*/
 
 function spookyBookSeaTitleHandler(request, response) {
-  // console.log('sppppooookkkkeeeeyyyy');
-  // console.log('Our request : ', request.body.ghost[0]);
   let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
-
-
-  /* ------------------  what in the hell is wrong with these if line?  ----*/
-  // s/b  https://www.googleapis.com/books/v1/volumes?q=+intitle:IT  - Title
-  // if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+ 
 
   if (request.body.ghost[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
   if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
 
   console.log('new URL: ', blood);
-  // console.log('IS THIS THE AUTHOR???', request.body.ghost[0]);
-    
   superagent.get(blood)
     .then(pumpkin => {
       let witch = pumpkin.body.items.map(zombie => {
-      return new Spookybooks(zombie.volumeInfo);
-    })
-    response.status(200).render('pages/searches/show', { searchResults: witch });
+        return new Spookybooks(zombie.volumeInfo);
+      })
+      response.status(200).render('pages/searches/show', { searchResults: witch });
       // console.log('ZOMBIE.VOLUMEINFO', zombie.volumeInfo);
-  })
-    // .then(witch => {
-    //   console.log('WITCH', witch);
-    //   response.render('pages/searches/show', { searchResults: witch })});
-    
-    
-    // .catch(error => console.error(error));
-    
+    })
   }
 
 
-  // response.status(200).render('pages/searches/new');
 
 
+
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Now listening on ${PORT}!`)
+      console.log('Database is active');
+    });
+  })
+  .catch(error => console.error(error));
 
 
 /* ------------------   Start Server -----------------*/
-app.listen(PORT, () => console.log(`Now listening on ${PORT}!`));
+// app.listen(PORT, () => console.log(`Now listening on ${PORT}!`));
+
