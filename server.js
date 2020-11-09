@@ -34,9 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
-app.get('/', (request, response) => {
-  response.render('pages/index');
-});
+app.get('/', getBookshelf);
 
 app.get('/new', (request, response) => { // displays search page
   console.log('I\'ll wear your face as a mask');
@@ -104,6 +102,15 @@ function spookyBookSeaTitleHandler(request, response) {
     })
   }
 
+  function getBookshelf (request, response) {
+    let SQL = 'SELECT * FROM books;';
+    return client.query(SQL)
+      .then(results => {
+        console.log('SQL', SQL);
+        console.log('results', results);
+        return response.render('pages/index', {results: results.rows});
+  })
+}
 
 
 
