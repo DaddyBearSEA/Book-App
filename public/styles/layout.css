@@ -41,3 +41,8 @@ input {
    width: 130px;
 
 }
+
+ul li {
+  font-size: medium;
+  color: aqua;
+}
