@@ -12,7 +12,7 @@ description VARCHAR
 INSERT INTO 
 books(author, title, isbn, image_url, description) 
 VALUES
- ('Brandon Rhiness', 'You are the Reason Mommy Drinks', '9781788300179', 'http://books.google.com/books/content?id=DqKztQEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api', 'Everyone thinks it, but nobody says it. Finally, there is an author with the courage to write what everyones been thinking. You are the Reason Mommy Drinks is a childrens book that is definitely not for children. But it will leave every mother worldwide nodding her head in agreement.');
+ ('Brandon Rhiness', 'You are the Reason Mommy Drinks', '9781788300179', 'http://books.google.com/books/content?id=DqKztQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'Everyone thinks it, but nobody says it. Finally, there is an author with the courage to write what everyones been thinking. You are the Reason Mommy Drinks is a childrens book that is definitely not for children. But it will leave every mother worldwide nodding her head in agreement.');
 
 
  INSERT INTO 

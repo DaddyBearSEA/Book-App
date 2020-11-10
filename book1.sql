@@ -1,6 +1,0 @@
-UPDATE books
-SET authors = ’Tom Clancy’, 
-title = ’The Hunt for Red October’, 
-isbn = ‘9781101010365’, 
-image_url = ‘http://books.google.com/books/content?id=xz2LhK79I3gC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api‘ , 
-description = ‘ Don't Miss the Original Series Tom Clancy's Jack Ryan Starring John Krasinski! The #1 New York Times bestseller that launched the phenomenal career of Tom Clancy—a gripping military thriller that introduced the world to his unforgettable hero, Jack Ryan—nominated as one of America’s best-loved novels by PBS’s The Great American Read. Somewhere under the freezing Atlantic, a Soviet sub commander has just made a fateful decision. The Red October is heading west. The Americans want her. The Russians want her back. The chase for the highly advanced nuclear submarine is on—and there’s only one man who can find her... Brilliant CIA analyst Jack Ryan has little interest in fieldwork, but when covert photographs of Red October land on his desk, Ryan soon finds himself in the middle of a high-stakes game of hide-and-seek played by two world powers—a game that could end in all-out war. ’ ;
