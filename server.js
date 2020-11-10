@@ -35,6 +35,7 @@ app.set('view engine', 'ejs');
 
 /* -------------------   Routes-------------------------*/
 app.get('/', getBookshelf);
+// app.get('/', totalCount);
 
 app.get('/new', (request, response) => { // displays search page
   console.log('I\'ll wear your face as a mask');
@@ -105,18 +106,24 @@ function spookyBookSeaTitleHandler(request, response) {
   function getBookshelf (request, response) {
     let SQL = 'SELECT * FROM books;';
     return client.query(SQL)
-      .then(results => {
-        console.log('SQL', SQL);
-        console.log('results', results);
-        return response.render('pages/index', {results: results.rows});
-  })
-}
-
-
+    .then(results => {
+      return response.render('pages/index', {results: results.rows});
+      return response.render('pages/index', {results: results.length});
+    })
+  }
+  
+//   function totalCount (request, response) {
+//   let bookCount = 'SELECT COUNT (*) FROM books;';
+//   return client.query(bookCount)
+//     .then(results => {
+//       console.log(results);
+// return response.render('pages/index', {results: result.rows.count});
+//   })
+// }
 
 
 // client.connect()
-//   .then(() => {
+//   .then(() => { 
 //     app.listen(PORT, () => {
 //       console.log(`Now listening on ${PORT}!`)
 //       console.log('Database is active');
