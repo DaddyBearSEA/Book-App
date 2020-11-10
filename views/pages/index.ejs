@@ -12,13 +12,16 @@
 <body>
   <%- include('../layout/header') %>
   <h2> Dr.Frankenstine's, Monster Book Collection</h2>
+   <div>Total Books: <%=results.length %> </div>
+  <%= console.log('results.LENGTH', results.length) %>
+
   <section>
     <% results.forEach(book => { %>
-    <img src= "<%= book.image_url %>">
-    <h1><%=book.title%></h1>
-    <h3><%=book.authors%></h3>
-    <p><%=book.description%></p>
-    <% }) %>
+      <img src= "<%= book.image_url %>">
+      <h1><%=book.title%></h1>
+      <h3><%=book.authors%></h3>
+      <p><%=book.description%></p>
+      <% }) %>
   </section>
 </body>
 </html>
