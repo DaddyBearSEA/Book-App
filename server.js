@@ -28,7 +28,7 @@ app.use(cors());
 // app.use(express.json());
 app.use(express.static('public'));
 
-app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true }));
 
 // -------------------Set default view engine
 app.set('view engine', 'ejs');
@@ -44,36 +44,14 @@ app.get('/new', (request, response) => { // displays search page
 app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book info
 
 
-// // proof of life
-// app.get('/', (request, response) => {
-//   console.log('No Booooooooleans here!');
-//   response.status(200).render('pages/index');
-// });
-
-// app.post('/hello', (request, response) => {
-//   console.log('I\'ll wear your face as a mask');
-//   response.status(200).render('pages/hello');
-// });
-
-// app.get('/search', spookyBookSeaAuthHandler);
-
-
-// app.get('/new', (request, response) => {
-//   console.log('Brains are better saute´d than boiled');
-//   response.status(200).render('pages/searches/new');
-// });
-
-
-
-
 
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.authors = (obj.authors) ? obj.authors: 'This was ghost written, no author found';
-  this.title = (obj.title) ? obj.title: 'Who says a book needs a title? No title found.';
-  this.description = (obj.description) ? obj.description: 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
-  this.image_url = (obj.imageLinks.smallThumbnail) ? obj.imageLinks.smallThumbnail: "https://i.imgur.com/J5LVHEL.jpg";
+  this.authors = (obj.authors) ? obj.authors : 'This was ghost written, no author found';
+  this.title = (obj.title) ? obj.title : 'Who says a book needs a title? No title found.';
+  this.description = (obj.description) ? obj.description : 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
+  this.image_url = (obj.imageLinks.smallThumbnail) ? obj.imageLinks.smallThumbnail : "https://i.imgur.com/J5LVHEL.jpg";
   // console.log('Constructor HIT!', this.authors);
 }
 
@@ -84,13 +62,17 @@ function Spookybooks(obj) {
 
 
 /* --------------------  Handlers  ------------------*/
+function pinkyHandler(request, response, error) { response.status(200).render('pages/searches/new') }; //SEARCH HANDLER
+// function errorHandler(request, response, error) {response.status(404).render('pages/error')};
+function blinkyHandler(request, response, error) { response.status(500).render('pages/error') }; // ERROR HANDLER
+
 
 function spookyBookSeaTitleHandler(request, response) {
   let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
- 
+
 
   if (request.body.ghost[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
-  if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; }
+  if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; } // 1 should be 0 (broken)
 
   console.log('new URL: ', blood);
   superagent.get(blood)
@@ -99,27 +81,21 @@ function spookyBookSeaTitleHandler(request, response) {
         return new Spookybooks(zombie.volumeInfo);
       })
       response.status(200).render('pages/searches/show', { searchResults: witch });
+      // console.log('ERROR CONSOLE LOG', error);
       // console.log('ZOMBIE.VOLUMEINFO', zombie.volumeInfo);
     })
+    // .catch (error => blinkyHandler(request, response, error));
   }
 
-  function getBookshelf (request, response) {
-    let SQL = 'SELECT * FROM books;';
-    return client.query(SQL)
+function getBookshelf(request, response) {
+  let SQL = 'SELECT * FROM books;';
+  return client.query(SQL)
     .then(results => {
-      return response.render('pages/index', {results: results.rows});
-      return response.render('pages/index', {results: results.length});
+      return response.render('pages/index', { results: results.rows });
+      return response.render('pages/index', { results: results.length });
     })
-  }
-  
-//   function totalCount (request, response) {
-//   let bookCount = 'SELECT COUNT (*) FROM books;';
-//   return client.query(bookCount)
-//     .then(results => {
-//       console.log(results);
-// return response.render('pages/index', {results: result.rows.count});
-//   })
-// }
+}
+
 
 
 // client.connect()
