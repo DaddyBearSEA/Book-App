@@ -6,13 +6,14 @@
 <body>
   <%- include('../../layout/header') %>
  <section>
+  <div id = "oneBook">
    <% searchResults.forEach(book => { %>
-    <!-- <% console.log('BOOK', book); %> -->
     <img src= "<%= book.image_url %>">
     <h1><%=book.title%></h1>
     <h3><%=book.authors%></h3>
     <p><%=book.description%></p>
   <% }) %>
+</div>
  </section>
 </body>
 </html>
