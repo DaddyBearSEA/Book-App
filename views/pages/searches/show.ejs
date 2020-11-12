@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../../layout/head') %>
 </head>
+
 <body>
   <%- include('../../layout/header') %>
- <section>
-  <div id = "oneBook">
-   <% searchResults.forEach(book => { %>
-    <img src= "<%= book.image_url %>">
-    <h1><%=book.title%></h1>
-    <h3><%=book.authors%></h3>
-    <p><%=book.description%></p>
-  <% }) %>
-</div>
- </section>
+  <section>
+    <div id="oneBook">
+      <% searchResults.forEach(book => { %>
+      <form method="POST" action="/searches">
+        <img src="<%= book.image_url %>">
+        <h1><%=book.title%></h1>
+        <h3><%=book.authors%></h3>
+        <p><%=book.description%></p>
+        <button id="boo-boo" type="submit">Boo is for BOOOOKSHELF!!!</button>
+      </form>
+      <% }) %>
+    </div>
+  </section>
 </body>
+
 </html>

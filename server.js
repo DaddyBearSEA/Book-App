@@ -43,6 +43,11 @@ app.get('/new', (request, response) => { // displays search page
 });
 app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book info
 
+app.post('/searches', booShelf); 
+app.get('/details', (request, response)=> {
+  console.log('Skinned alive');
+  response.render('pages/details');
+});
 
 
 // ----------------------- Book Constructor ------------//
@@ -70,7 +75,8 @@ function blinkyHandler(request, response, error) { response.status(500).render('
 
 function spookyBookSeaTitleHandler(request, response) {
   let blood = `https://www.googleapis.com/books/v1/volumes?q=`;
-
+console.log('SPOOKY BOOKS REQUEST', request);
+console.log('SPOOKY BOOKS RESPONSE', response);
 
   if (request.body.ghost[1] === 'author') { blood += `+inauthor:${request.body.ghost[0]}`; }
   if (request.body.ghost[1] === 'title') { blood += `+intitle:${request.body.ghost[0]}`; } // 1 should be 0 (broken)
@@ -97,6 +103,21 @@ function getBookshelf(request, response) {
     })
 }
 
+function booShelf(request, response) {
+  let booSql = `INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5) returning *`;
+  // console.log('REQUEST.BODY', witch);
+  const params = [request.body.author, request.body.title, request.body.isbn, request.body.image_url, request.body.description];
+  console.log('PARAMAMAMAMA', params);
+  console.log('Boo, this inserts the DB', booSql);
+  client.query(booSql, params)
+
+  .then(boo => response.status(200).redirect('/details'))
+  .catch(error => {
+    // blinkyHandler(error); 
+    console.log('BLINKY HANDLER', error);
+  });
+
+}
 
 
 // client.connect()
