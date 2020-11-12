@@ -65,7 +65,7 @@ section {
   align-items: center;
   /* outline: cornsilk 3px dotted; */
 }
-
+/* ----  show ejs ---- */
 #oneBook {
   background-color: darkgoldenrod;
   margin-top: 25px;
@@ -82,6 +82,21 @@ section {
   /* outline: darkgrey 4px dashed; */
 }
 
+#myBooks {
+  background-color: darkgoldenrod;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 90%;
+  
+  /* width: auto; */
+  /* flex-direction: column; */
+  /* align-self: center; */
+  /* outline: darkgrey 4px dashed; */
+}
 img {
   margin-top: 15px;
   align-self: center;

@@ -10,16 +10,16 @@
   <%= console.log('results.LENGTH', results.length) %>
 
   <section>
+    <div id = "myBooks">
     <% results.forEach(book => { %>
-      <div class = "oneBook">
       <img src= "<%= book.image_url %>">
       <h1><%=book.title%></h1>
       <h3><%=book.authors%></h3>
       <form>
         <button id="GhastlyViews" type="submit">VIEW DETAILS</button>
       </form>
-    </div>
       <% }) %>
+    </div>
   </section>
 </body>
 </html>

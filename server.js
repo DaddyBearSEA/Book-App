@@ -48,11 +48,11 @@ app.post('/new', spookyBookSeaTitleHandler); // returns the search for the book 
 // ----------------------- Book Constructor ------------//
 
 function Spookybooks(obj) {
-  this.authors = (obj.authors) ? obj.authors : 'This was ghost written, no author found';
-  this.title = (obj.title) ? obj.title : 'Who says a book needs a title? No title found.';
-  this.description = (obj.description) ? obj.description : 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
-  this.image_url = (obj.imageLinks.smallThumbnail) ? obj.imageLinks.smallThumbnail : "https://i.imgur.com/J5LVHEL.jpg";
-  // console.log('Constructor HIT!', this.authors);
+  this.authors = obj.authors || 'This was ghost written, no author found';
+  this.title = obj.title || 'Who says a book needs a title? No title found.';
+  this.description = obj.description || 'Oh, you want to know what this book is about? Read it, you\'ll figure it out.';
+  this.image_url = obj.imageLinks.smallThumbnail ? obj.imageLinks.smallThumbnail : `https://i.imgur.com/J5LVHEL.jpg`;
+
 }
 
 // ^^^^^^^^^^JavaScript Array toString() Method for AUTHOR^^^^^^^^^^
