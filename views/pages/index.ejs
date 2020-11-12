@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/reset.css">
-  <link rel="stylesheet" href="/styles/layout.css">
-  <link rel="stylesheet" href="/styles/modules.css">
-  <link rel="stylesheet" href="/styles/base.css">
-  <title>Booooook App</title>
+  <%- include('../layout/head') %>
 </head>
 <body>
   <%- include('../layout/header') %>
   <h2> Dr.Frankenstine's, Monster Book Collection</h2>
-   <div>Total Books: <%=results.length %> </div>
+   <div id="numOfBooks">Total Books: <%=results.length %> </div>
   <%= console.log('results.LENGTH', results.length) %>
 
   <section>
     <% results.forEach(book => { %>
+      <div class = "oneBook">
       <img src= "<%= book.image_url %>">
       <h1><%=book.title%></h1>
       <h3><%=book.authors%></h3>
       <form>
         <button id="GhastlyViews" type="submit">VIEW DETAILS</button>
       </form>
+    </div>
       <% }) %>
   </section>
 </body>
